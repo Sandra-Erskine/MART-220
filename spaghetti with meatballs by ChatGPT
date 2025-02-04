@@ -1,0 +1,61 @@
+unction setup() {
+  createCanvas(400, 400);
+  background(255);
+}
+
+function draw() {
+  background(255); // Clear background
+
+  // Draw plate (a large circle)
+  fill(220, 200, 150); // Light plate color
+  noStroke();
+  ellipse(200, 300, 300, 300); // Plate size and position
+
+  // Draw spaghetti noodles (random curved lines)
+  stroke(255, 223, 186); // Spaghetti color
+  strokeWeight(4);
+  noFill();
+  for (let i = 0; i < 6; i++) {
+    let startX = random(100, 300);
+    let startY = random(250, 350);
+    let controlX = random(100, 300);
+    let controlY = random(150, 250);
+    let endX = random(100, 300);
+    let endY = random(250, 350);
+    beginShape();
+    curveVertex(startX, startY);
+    curveVertex(controlX, controlY);
+    curveVertex(endX, endY);
+    endShape();
+  }
+
+  // Draw meatballs (small circles)
+  fill(139, 69, 19); // Brown color for meatballs
+  noStroke();
+  ellipse(200, 260, 40, 40); // First meatball
+  ellipse(250, 300, 40, 40); // Second meatball
+  ellipse(150, 300, 40, 40); // Third meatball
+
+  // Draw sauce on meatballs (red circles)
+  fill(255, 0, 0); // Red sauce color
+  noStroke();
+  ellipse(200, 260, 20, 20); // Sauce on the first meatball
+  ellipse(250, 300, 20, 20); // Sauce on the second meatball
+  ellipse(150, 300, 20, 20); // Sauce on the third meatball
+
+  // Sprinkle parmesan cheese (small white dots)
+  fill(255); // Parmesan color (white)
+  noStroke();
+  for (let i = 0; i < 50; i++) {
+    ellipse(random(100, 300), random(250, 350), 5, 5);
+  }
+
+  // Add title and artist name
+  fill(0);
+  textSize(24);
+  text("Spaghetti with Meatballs", 20, 30);
+
+  textSize(16);
+  text("Created by ChatGPT", width - 180, height - 20);
+}
+
