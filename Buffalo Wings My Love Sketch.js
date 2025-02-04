@@ -15,22 +15,22 @@ function setup() {
 }
 
 function draw() {
-  background(255);
+  background(0);
 
   // Draw Title in the upper-left corner
   textSize(24);
-  fill(0);
+  fill(300);
   text("Buffalo Wings My Love", 10, 30);
   
   // Draw Artist's Name in the lower-right corner
   textSize(16);
-  fill(0);
+  fill(300,);
   text("Sandra Erskine", width - 160, height - 20);
 
   // Draw the plate
-  fill(200, 150, 100);  // Plate color
+  fill(300, 300, 200);  // Plate color
   noStroke();
-  rect(100, 250, 200, 100);
+  circle(200, 200, 200, 80);
 
   // Draw chicken wings and sauce
   for (let i = 0; i < wingPositions.length; i++) {
