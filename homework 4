@@ -1,1 +1,119 @@
+let wingPositions = [];
+let saucePositions = [];
+let isDragging = false;
+let selectedWingIndex = -1; 
+
+let myFont;
+let human; // Character object
+
+// Frame array for animation
+let idleFrames = [];
+let currentFrame = 0;
+let animationTimer = 0;
+let animationSpeed = 10; // Control speed of animation (higher = slower)
+
+// Human class to represent the character
+class Character {
+  constructor(name, x, y) {
+    this.name = name;  // Character's name
+    this.x = x;        // Character's x position
+    this.y = y;        // Character's y position
+    this.width = 50;   // Width of the character
+    this.height = 50;  // Height of the character
+    this.frames = idleFrames; // Animation frames
+  }
+
+  // Method to handle idle animation
+  animate() {
+    if (frameCount % animationSpeed === 0) {
+      currentFrame = (currentFrame + 1) % this.frames.length;
+    }
+    image(this.frames[currentFrame], this.x, this.y, this.width, this.height); // Draw the current frame
+  }
+}
+
+function preload() {
+  myFont = loadFont('assets/fonts/Saira-Thin.ttf');
+  // Load animation frames for idle state (can be any images or frames)
+  for (let i = 1; i <= 5; i++) {
+    idleFrames.push(loadImage(`assets/idle_frame_${i}.png`)); // Assume image files exist
+  }
+}
+
+function setup() {
+  createCanvas(400, 400);
+  background(255);
+
+  // Initialize wing and sauce positions
+  for (let i = 0; i < 6; i++) {
+    wingPositions.push(createVector(random(100, 300), random(270, 320)));
+    saucePositions.push(createVector(wingPositions[i].x + random(-10, 10), wingPositions[i].y + random(-10, 10)));
+  }
+
+  // Create the character object
+  human = new Character("Sandra Erskine", 100, 100);
+
+  // Set up event listeners for mouse actions
+  mousePressed = mousePressedHandler;
+  mouseReleased = mouseReleasedHandler;
+  mouseDragged = mouseDraggedHandler;
+}
+
+function draw() {
+  background(0);
+
+  // Draw Title in the upper-left corner
+  textSize(24);
+  fill(300);
+  text("Buffalo Wings My Love", 10, 30);
+  
+  // Draw Artist's Name in the lower-right corner
+  textSize(16);
+  fill(300);
+  text("Sandra Erskine", width - 160, height - 20);
+
+  // Draw the plate
+  fill(300, 300, 200);  // Plate color
+  noStroke();
+  circle(200, 200, 200, 80);
+
+  // Draw chicken wings and sauce
+  for (let i = 0; i < wingPositions.length; i++) {
+    // Draw the wing (bright orange)
+    fill(255, 140, 0);  // Bright orange color
+    noStroke();
+    ellipse(wingPositions[i].x, wingPositions[i].y, 50, 30);  // The wing
+
+    // Add small white rectangles to indicate the ends of the chicken wing
+    fill(255);  // White color for the ends
+    rect(wingPositions[i].x - 25, wingPositions[i].y - 5, 15, 10); // Left end
+  }
+
+  // Call the animate method of the character to display animation
+  human.animate();
+}
+
+// Mouse event handlers
+function mousePressedHandler() {
+  for (let i = 0; i < wingPositions.length; i++) {
+    let wing = wingPositions[i];
+    if (dist(mouseX, mouseY, wing.x, wing.y) < 25) {
+      isDragging = true;
+      selectedWingIndex = i;
+      break;
+    }
+  }
+}
+
+function mouseReleasedHandler() {
+  isDragging = false;
+  selectedWingIndex = -1;
+}
+
+function mouseDraggedHandler() {
+  if (isDragging && selectedWingIndex !== -1) {
+    wingPositions[selectedWingIndex].x = mouseX;
+    wingPositions[selectedWingIndex].y = mouseY;
+  }
+}
 
